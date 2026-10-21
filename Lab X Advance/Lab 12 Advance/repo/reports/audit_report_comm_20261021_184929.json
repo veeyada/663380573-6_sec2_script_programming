@@ -1,0 +1,269 @@
+[
+    {
+        "timestamp": "2026-10-21T18:48:02.660102",
+        "status": "INFO",
+        "task_type": "agent_run",
+        "message": "Communication Agent started.",
+        "details": {}
+    },
+    {
+        "timestamp": "2026-10-21T18:48:02.660206",
+        "status": "INFO",
+        "task_type": "send_email",
+        "message": "Starting task 'Send Daily Sales Report Email'",
+        "details": {
+            "name": "Send Daily Sales Report Email",
+            "type": "send_email",
+            "parameters": {
+                "recipients": {
+                    "to": [
+                        "veeyada.m@kkumail.com"
+                    ],
+                    "cc": [
+                        "veeyada.m@kkumail.com"
+                    ]
+                },
+                "subject_template": "Daily Sales Report - {report_date}",
+                "body_template": "Dear Team,\n\nPlease find the latest sales report for {report_date} attached. Total sales: ${sales_figure:,.2f}. Total active customers: {total_customers}. Top product: {top_product}.\n\nBest regards,\nAutomated Agent (run {run_id})",
+                "html_body_template": "<html><body style=\"font-family:Arial,sans-serif;color:#222\"><h2 style=\"color:#1a73e8\">Daily Sales Report - {report_date}</h2><p>Dear Team,</p><p>Please find the latest <b>{report_name}</b> attached.</p><table cellpadding=\"8\" style=\"border-collapse:collapse;border:1px solid #ccc\"><tr style=\"background:#f1f3f4\"><th align=\"left\">Metric</th><th align=\"right\">Value</th></tr><tr><td>Total sales</td><td align=\"right\">${sales_figure:,.2f}</td></tr><tr><td>Active customers</td><td align=\"right\">{total_customers}</td></tr><tr><td>Top product</td><td align=\"right\">{top_product}</td></tr></table><p>Best regards,<br>Automated Agent <small style=\"color:#888\">(run {run_id})</small></p></body></html>",
+                "attachments": [
+                    "{attachment_path_1}",
+                    "{attachment_path_2}"
+                ],
+                "is_html": false
+            },
+            "output_context_key": "daily_report_email"
+        }
+    },
+    {
+        "timestamp": "2026-10-21T18:48:04.558994",
+        "status": "ERROR",
+        "task_type": "send_email",
+        "message": "Task 'Send Daily Sales Report Email' failed.",
+        "details": {
+            "output": {
+                "recipients": {
+                    "to": [
+                        "veeyada.m@kkumail.com"
+                    ],
+                    "cc": [
+                        "veeyada.m@kkumail.com"
+                    ]
+                },
+                "subject": "Daily Sales Report - 2026-10-21",
+                "attachments": [
+                    "data\\reports\\sales_report.pdf",
+                    "data\\reports\\summary_data.xlsx"
+                ],
+                "sent_at": "2026-10-21T18:48:04"
+            }
+        }
+    },
+    {
+        "timestamp": "2026-10-21T18:48:04.559157",
+        "status": "INFO",
+        "task_type": "send_sms",
+        "message": "Starting task 'Send Sales Alert SMS'",
+        "details": {
+            "name": "Send Sales Alert SMS",
+            "type": "send_sms",
+            "parameters": {
+                "phone_numbers": [
+                    "veeyada.m@kkumail.com"
+                ],
+                "subject_template": "[SMS] Sales {report_date}",
+                "message_template": "Sales for {report_date} are ${sales_figure:,.2f}. Total customers: {total_customers}. Report sent to {daily_report_email.recipients.to.0}. Review!",
+                "carrier_name": ""
+            },
+            "output_context_key": "sales_sms"
+        }
+    },
+    {
+        "timestamp": "2026-10-21T18:48:04.559286",
+        "status": "ERROR",
+        "task_type": "template_render",
+        "message": "Template rendering failed: Missing context key: 'daily_report_email'",
+        "details": {
+            "template": "Sales for {report_date} are ${sales_figure:,.2f}. Total customers: {total_customers}. Report sent to {daily_report_email.recipients.to.0}. Review!"
+        }
+    },
+    {
+        "timestamp": "2026-10-21T18:48:04.559337",
+        "status": "ERROR",
+        "task_type": "send_sms",
+        "message": "An error occurred during task 'Send Sales Alert SMS': Missing context key: 'daily_report_email'",
+        "details": {
+            "error": "Missing context key: 'daily_report_email'",
+            "task_details": {
+                "name": "Send Sales Alert SMS",
+                "type": "send_sms",
+                "parameters": {
+                    "phone_numbers": [
+                        "veeyada.m@kkumail.com"
+                    ],
+                    "subject_template": "[SMS] Sales {report_date}",
+                    "message_template": "Sales for {report_date} are ${sales_figure:,.2f}. Total customers: {total_customers}. Report sent to {daily_report_email.recipients.to.0}. Review!",
+                    "carrier_name": ""
+                },
+                "output_context_key": "sales_sms"
+            }
+        }
+    },
+    {
+        "timestamp": "2026-10-21T18:48:04.584649",
+        "status": "INFO",
+        "task_type": "send_email",
+        "message": "Starting task 'Simulate Incoming Request Email (to self)'",
+        "details": {
+            "name": "Simulate Incoming Request Email (to self)",
+            "type": "send_email",
+            "parameters": {
+                "recipients": {
+                    "to": [
+                        "veeyada.m@kkumail.com"
+                    ]
+                },
+                "subject_template": "Data Request for {report_date} - Urgent [run {run_id}]",
+                "body_template": "Hello Agent,\n\nWe need the latest data for {report_date}. Please process urgently. This email includes attachments.\n\nThank you,\nClient Team\n\n\nThis is an urgent request for new data processing.",
+                "attachments": [
+                    "data/reports/sales_report.pdf",
+                    "data/reports/summary_data.xlsx"
+                ],
+                "is_html": false
+            },
+            "output_context_key": "simulated_email_sent"
+        }
+    },
+    {
+        "timestamp": "2026-10-21T18:48:06.872259",
+        "status": "ERROR",
+        "task_type": "send_email",
+        "message": "Task 'Simulate Incoming Request Email (to self)' failed.",
+        "details": {
+            "output": {
+                "recipients": {
+                    "to": [
+                        "veeyada.m@kkumail.com"
+                    ]
+                },
+                "subject": "Data Request for 2026-10-21 - Urgent [run 20261021-184802]",
+                "attachments": [
+                    "data\\reports\\sales_report.pdf",
+                    "data\\reports\\summary_data.xlsx"
+                ],
+                "sent_at": "2026-10-21T18:48:06"
+            }
+        }
+    },
+    {
+        "timestamp": "2026-10-21T18:48:06.872384",
+        "status": "INFO",
+        "task_type": "process_inbox",
+        "message": "Starting task 'Process Incoming Data Requests'",
+        "details": {
+            "name": "Process Incoming Data Requests",
+            "type": "process_inbox",
+            "parameters": {
+                "mailbox": "INBOX",
+                "search_criteria": {
+                    "status": "UNSEEN",
+                    "fallback_status": "ALL",
+                    "from_sender": "veeyada.m@kkumail.com",
+                    "subject_contains": [
+                        "Data Request",
+                        "{run_id}"
+                    ]
+                },
+                "wait_seconds": 5,
+                "max_attempts": 6,
+                "retry_interval_seconds": 10,
+                "rules": [
+                    {
+                        "name": "save_request_attachments",
+                        "if": {
+                            "from_sender": "{sender_email}",
+                            "subject_contains": "Request"
+                        },
+                        "then": {
+                            "download_attachments_to": "data/incoming_attachments/{report_date}",
+                            "allowed_extensions": [
+                                ".pdf"
+                            ],
+                            "rename_template": "request_{uid}_{filename}",
+                            "mark_as_read": true
+                        }
+                    },
+                    {
+                        "name": "urgent_sms_alert",
+                        "if": {
+                            "body_contains": "urgent",
+                            "has_attachments": true
+                        },
+                        "then": {
+                            "send_sms_alert": true,
+                            "alert_phone_numbers": [
+                                "veeyada.m@kkumail.com"
+                            ],
+                            "alert_carrier": "",
+                            "alert_message_template": "URGENT: New Data Request from {sender_address} - Subject: {subject}. Saved: {attachments_meta.0.filename}"
+                        }
+                    },
+                    {
+                        "name": "auto_reply",
+                        "if": {
+                            "body_contains": "new data processing"
+                        },
+                        "then": {
+                            "reply_with_template": "Agent received your request for '{subject}'. We are now processing the new data ({report_name}, sales ${sales_figure:,.2f}). You will receive an update shortly.",
+                            "reply_subject_template": "Re: {subject} - Received & Processing"
+                        }
+                    }
+                ]
+            },
+            "output_context_key": "processed_inbox_results"
+        }
+    },
+    {
+        "timestamp": "2026-10-21T18:49:27.084094",
+        "status": "WARNING",
+        "task_type": "process_inbox",
+        "message": "No emails matched the inbox search criteria.",
+        "details": {}
+    },
+    {
+        "timestamp": "2026-10-21T18:49:27.084170",
+        "status": "SUCCESS",
+        "task_type": "process_inbox",
+        "message": "Task 'Process Incoming Data Requests' completed successfully.",
+        "details": {
+            "output_context_key": "processed_inbox_results",
+            "output": {
+                "processed_emails": []
+            }
+        }
+    },
+    {
+        "timestamp": "2026-10-21T18:49:29.348788",
+        "status": "ERROR",
+        "task_type": "error_notification",
+        "message": "Error notification could not be sent",
+        "details": {}
+    },
+    {
+        "timestamp": "2026-10-21T18:49:29.348863",
+        "status": "INFO",
+        "task_type": "agent_run_summary",
+        "message": "Communication Agent finished in 86.69 seconds.",
+        "details": {
+            "success": 1,
+            "errors": 5
+        }
+    },
+    {
+        "timestamp": "2026-10-21T18:49:29.349517",
+        "status": "INFO",
+        "task_type": "audit_report",
+        "message": "Audit report generated at D:\\workspace\\script\\Lab 12 Advance\\repo\\reports\\audit_report_comm_20261021_184929.json",
+        "details": {}
+    }
+]
