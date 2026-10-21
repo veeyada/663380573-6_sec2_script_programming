@@ -12,7 +12,8 @@
 .
 ├── Lab/                      Lab ประจำสัปดาห์ และ Class Activity
 │   ├── Week 1 … Week 6
-│   └── Class Activity 1 … Class Activity 5
+│   ├── Class Activity 1 … Class Activity 4
+│   └── week12
 ├── Lab X Basic/              LabX Basic
 │   ├── Lab 8 Basic
 │   ├── Lab 10 Basic
@@ -42,7 +43,7 @@
 | [Class Activity 2](Lab/Class%20Activity%202%20-%20OOP%20Fundamentals%20%26%20Refactoring%20the%20CLI%20Task%20Manager) | OOP Fundamentals & Refactoring the CLI Task Manager |
 | [Class Activity 3](Lab/Class%20Activity%203%20-%20Interacting%20with%20Web%20APIs%20%28JSON%29) | Interacting with Web APIs: Fetching and Processing JSON Data |
 | [Class Activity 4](Lab/Class%20Activity%204%20-%20Project%20Planning%20%26%20Design%20%28Enhanced%20Task%20Manager%29) | Project Planning & Design: Enhanced Task Manager |
-| [Class Activity 5](Lab/Class%20Activity%205%20-%20Final%20Enhanced%20Task%20Manager) | Final Enhanced Task Manager CLI (Week 12) |
+| [week12](Lab/week12) | Final Enhanced Task Manager CLI (Week 12) |
 
 ## Lab X Basic
 
