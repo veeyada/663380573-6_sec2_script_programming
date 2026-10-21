@@ -1,0 +1,5 @@
+id,name,category,stock,details.brand,details.model,details.layout,details.dpi,details.color,details.features
+PROD001,Laptop Pro,Electronics,75,TechCorp,XPS 15,,,Space Grey,
+PROD002,Mechanical Keyboard,Peripherals,120,KeyMaster,,UK ISO,,,
+PROD003,Ergonomic Mouse,Peripherals,80,ErgoGear,,,2000,,
+PROD004,Smart Speaker,Audio,40,SoundGenius,,,,,Voice Assistant; Multi-room
