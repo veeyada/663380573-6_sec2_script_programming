@@ -1,0 +1,164 @@
+[
+    {
+        "timestamp": "2026-10-20T04:30:54.344503",
+        "status": "INFO",
+        "task_type": "send_email",
+        "message": "Starting task 'Send Daily Sales Report Email'",
+        "details": {
+            "name": "Send Daily Sales Report Email",
+            "type": "send_email",
+            "output_context_key": "report_email",
+            "parameters": {
+                "recipients": {
+                    "to": [
+                        "{test_recipient}"
+                    ],
+                    "cc": [
+                        "{sender_email}"
+                    ]
+                },
+                "subject_template": "Daily Sales Report - {report_date}",
+                "body_template": "Dear Team,\n\nPlease find the latest sales report ({report_name}) for {report_date} attached.\nTotal sales: ${sales_figure:,.2f}\nTotal active customers: {total_customers}\n\nBest regards,\nAutomated Agent\n{student_name} {student_id}",
+                "attachments": [
+                    "data/reports/sales_report.pdf",
+                    "data/reports/summary_data.xlsx"
+                ],
+                "is_html": false
+            }
+        }
+    },
+    {
+        "timestamp": "2026-10-20T04:30:57.069512",
+        "status": "ERROR",
+        "task_type": "send_email",
+        "message": "Task 'Send Daily Sales Report Email' failed.",
+        "details": {}
+    },
+    {
+        "timestamp": "2026-10-20T04:30:57.069512",
+        "status": "INFO",
+        "task_type": "send_sms",
+        "message": "Starting task 'Send Daily Sales SMS'",
+        "details": {
+            "name": "Send Daily Sales SMS",
+            "type": "send_sms",
+            "output_context_key": "report_sms",
+            "parameters": {
+                "phone_numbers": [
+                    "{sms_gateway}"
+                ],
+                "message_template": "Sales {report_date}: ${sales_figure:,.2f}, {total_customers} customers. Report emailed. - {student_id}"
+            }
+        }
+    },
+    {
+        "timestamp": "2026-10-20T04:30:59.314469",
+        "status": "ERROR",
+        "task_type": "send_sms",
+        "message": "Task 'Send Daily Sales SMS' failed.",
+        "details": {}
+    },
+    {
+        "timestamp": "2026-10-20T04:30:59.314469",
+        "status": "INFO",
+        "task_type": "send_email",
+        "message": "Starting task 'Simulate Incoming Request Email (to self)'",
+        "details": {
+            "name": "Simulate Incoming Request Email (to self)",
+            "type": "send_email",
+            "parameters": {
+                "recipients": {
+                    "to": [
+                        "{sender_email}"
+                    ]
+                },
+                "subject_template": "Data Request for {report_date}",
+                "body_template": "Hello Agent,\n\nWe need the latest data for {report_date}. This is an urgent request for new data processing.\nThe source file is attached.\n\n{student_name} {student_id}",
+                "attachments": [
+                    "data/reports/sales_report.pdf"
+                ],
+                "is_html": false
+            }
+        }
+    },
+    {
+        "timestamp": "2026-10-20T04:31:01.029099",
+        "status": "ERROR",
+        "task_type": "send_email",
+        "message": "Task 'Simulate Incoming Request Email (to self)' failed.",
+        "details": {}
+    },
+    {
+        "timestamp": "2026-10-20T04:31:01.029099",
+        "status": "INFO",
+        "task_type": "process_inbox",
+        "message": "Starting task 'Process Incoming Data Requests'",
+        "details": {
+            "name": "Process Incoming Data Requests",
+            "type": "process_inbox",
+            "output_context_key": "processed_requests",
+            "parameters": {
+                "mailbox": "INBOX",
+                "wait_before_search_seconds": 10,
+                "poll_attempts": 3,
+                "search_criteria": {
+                    "status": "UNSEEN",
+                    "from_sender": "{sender_email}",
+                    "subject_contains": "Data Request",
+                    "ignore_subject_prefixes": [
+                        "Re:",
+                        "Fwd:"
+                    ]
+                },
+                "download_attachments_base_dir": "data/incoming_attachments",
+                "rules": [
+                    {
+                        "name": "Request from self -> download & mark read",
+                        "if": {
+                            "from_sender": "{sender_email}",
+                            "subject_contains": "Request"
+                        },
+                        "then": {
+                            "reply_with_template": "Agent received your request '{subject}'. Attachments downloaded: {attachment_names}. We are now processing the new data.",
+                            "reply_subject_template": "Re: {subject} - Received & Processing"
+                        }
+                    },
+                    {
+                        "name": "Urgent body -> SMS alert",
+                        "if": {
+                            "body_contains": "urgent"
+                        },
+                        "then": {
+                            "send_sms_alert": true,
+                            "alert_phone_numbers": [
+                                "{sms_gateway}"
+                            ],
+                            "alert_message_template": "URGENT request from {sender_address}: {subject}"
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    {
+        "timestamp": "2026-10-20T04:31:34.428514",
+        "status": "INFO",
+        "task_type": "process_inbox",
+        "message": "No matching unread emails found.",
+        "details": {}
+    },
+    {
+        "timestamp": "2026-10-20T04:31:34.428514",
+        "status": "SUCCESS",
+        "task_type": "process_inbox",
+        "message": "Task 'Process Incoming Data Requests' completed.",
+        "details": {}
+    },
+    {
+        "timestamp": "2026-10-20T04:31:34.428514",
+        "status": "INFO",
+        "task_type": "agent_run_summary",
+        "message": "Summary: 1 action(s) succeeded, 3 failed.",
+        "details": {}
+    }
+]
