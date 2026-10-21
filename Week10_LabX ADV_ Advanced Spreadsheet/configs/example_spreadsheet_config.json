@@ -1,0 +1,115 @@
+{
+    "input_file": "data/input_data.xlsx",
+    "output_file": "data/output_report.xlsx",
+    "tasks": [
+        {
+            "type": "copy_data",
+            "source_sheet": "SalesData",
+            "dest_sheet": "Raw Data"
+        },
+        {
+            "type": "calculate_column",
+            "sheet": "Raw Data",
+            "target_column": "D",
+            "header": "Total Revenue",
+            "start_row": 2,
+            "formula": "=B{row}*C{row}",
+            "number_format": "#,##0.00"
+        },
+        {
+            "type": "conditional_format",
+            "sheet": "Raw Data",
+            "range": "D2:D100",
+            "rule_type": "color_scale",
+            "min_color": "FF0000",
+            "mid_color": "FFFF00",
+            "max_color": "00FF00"
+        },
+        {
+            "type": "calculate_column",
+            "sheet": "Raw Data",
+            "target_column": "E",
+            "header": "Status",
+            "start_row": 2,
+            "formula": "=IF(D{row}>1000,\"High Value\",\"Standard\")"
+        },
+        {
+            "type": "conditional_format",
+            "sheet": "Raw Data",
+            "range": "E2:E100",
+            "rule_type": "expression",
+            "formula": "=$E2=\"High Value\"",
+            "fill_color": "92D050",
+            "font_color": "000000"
+        },
+        {
+            "type": "data_validation",
+            "sheet": "Raw Data",
+            "range": "B2:B{last_row}",
+            "validation_type": "whole",
+            "operator": "between",
+            "min": 0,
+            "max": 10000,
+            "prompt": "Quantity must be a whole number from 0 to 10,000",
+            "error_message": "Quantity must be a whole number from 0 to 10,000"
+        },
+        {
+            "type": "data_validation",
+            "sheet": "Raw Data",
+            "range": "F2:F{last_row}",
+            "header_cell": "F1",
+            "header": "Review",
+            "validation_type": "list",
+            "options": ["Approved", "Pending", "Rejected"],
+            "default_value": "Pending",
+            "error_message": "Choose Approved, Pending or Rejected"
+        },
+        {
+            "type": "chart",
+            "sheet": "Raw Data",
+            "chart_type": "bar",
+            "data_range": "D1:D{last_row}",
+            "category_range": "A2:A{last_row}",
+            "title": "Revenue by Product",
+            "x_axis_title": "Product",
+            "y_axis_title": "Revenue",
+            "top_left_cell": "H2"
+        },
+        {
+            "type": "summary",
+            "source_sheet": "Raw Data",
+            "dest_sheet": "Summary",
+            "group_by_column": "A",
+            "value_columns": ["B", "C"],
+            "group_header": "Product Name",
+            "value_header": "Total Revenue",
+            "sort": "desc",
+            "add_totals": true
+        },
+        {
+            "type": "chart",
+            "sheet": "Summary",
+            "chart_type": "bar",
+            "data_range": "B1:B{last_row}",
+            "category_range": "A2:A{last_row}",
+            "title": "Product-wise Revenue (sorted)",
+            "x_axis_title": "Product",
+            "y_axis_title": "Revenue",
+            "top_left_cell": "D2"
+        },
+        {
+            "type": "chart",
+            "sheet": "Summary",
+            "chart_type": "pie",
+            "data_range": "B1:B{last_row}",
+            "category_range": "A2:A{last_row}",
+            "title": "Revenue Share by Product",
+            "top_left_cell": "D21"
+        },
+        {
+            "type": "protect_sheet",
+            "sheet": "Summary",
+            "password": "lab10"
+        }
+    ]
+}
